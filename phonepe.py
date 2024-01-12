@@ -186,18 +186,18 @@ if SELECT == "Explore Data":
         
         # Overall State Data - TRANSACTIONS AMOUNT - INDIA MAP 
         with col1:
-            world = pd.read_csv('C:\\Users\\HP\\Desktop\\vs code\\state.csv')
+            world = pd.read_csv('C:\\Users\\HP\\Desktop\\vs code\\state2.csv')
             st.markdown("## :violet[Overall State Data - Transactions Amount]")
             mycursor.execute("SELECT State, SUM(map_count) AS Total_Transactions, SUM(map_amount) AS Total_amount FROM map_transaction WHERE Year = 2018 AND Quarter = 3 GROUP BY State ORDER BY State")
             df1 = pd.DataFrame(mycursor.fetchall(),columns= ['State', 'Total_Transactions', 'Total_amount'])
-            df2 = pd.read_csv('C:\\Users\\HP\\Desktop\\vs code\\State.csv')
-            df1.State = df2
+            df2 = pd.read_csv('C:\\Users\\HP\\Desktop\\vs code\\state2.csv')
+            df1.state = df2
 
-            df1 = df1.merge(df2, left_on='State', right_on='State')
+            df1 = df1.merge(df2, left_on='State', right_on='state')
                                                
             fig = px.choropleth(df1, geojson="https://gist.githubusercontent.com/jbrobst/56c13bbbf9d97d187fea01ca62ea5112/raw/e388c4cae20aa53cb5090210a42ebb9b765c0a36/india_states.geojson",
             featureidkey='properties.ST_NM',
-            locations='State',
+            locations='state',
             color='Total_amount',
             color_continuous_scale='sunset'
             )
@@ -209,13 +209,23 @@ if SELECT == "Explore Data":
             st.markdown("## :violet[Overall State Data - Transactions Count]")
             mycursor.execute(f"SELECT State, SUM(map_count) AS Total_Transactions, sum(map_amount) AS Total_amount FROM map_transaction WHERE Year = '{Year}' AND Quarter = '{Quarter}' GROUP BY State ORDER BY State")
             df1 = pd.DataFrame(mycursor.fetchall(),columns= ['State', 'Total_Transactions', 'Total_amount'])
-            df2 = pd.read_csv('C:\\Users\\HP\\Desktop\\vs code\\state.csv')
+            df2 = pd.read_csv('C:\\Users\\HP\\Desktop\\vs code\\state2.csv')
             #df1.Total_Transactions = df1.Total_Transactions.astype(int)
-            df1.State = df2
+            df1.state = df2
+            df1 = df1.merge(df2, left_on='State', right_on='state')
+            
+           
+            
+           
+            
+
+
+
 
             fig = px.choropleth(df1,geojson="https://gist.githubusercontent.com/jbrobst/56c13bbbf9d97d187fea01ca62ea5112/raw/e388c4cae20aa53cb5090210a42ebb9b765c0a36/india_states.geojson",
+            
                       featureidkey='properties.ST_NM',
-                      locations='State',
+                      locations='state',
                       color='Total_Transactions',
                       color_continuous_scale='sunset')
 
@@ -269,7 +279,7 @@ if SELECT == "Explore Data":
         st.markdown("## :violet[Overall State Data - User App opening frequency]")
         mycursor.execute(f"SELECT State, SUM(district), SUM(registeredUsers) AS Total_Users FROM map_user WHERE Year = '{Year}' AND Quarter = '{Quarter}' GROUP BY State ORDER BY Total_Users ")
         df1 = pd.DataFrame(mycursor.fetchall(), columns=['State','district', 'Total_Users'])
-        df2 = pd.read_csv('C:\\Users\\HP\\Desktop\\vs code\\state.csv')
+        df2 = pd.read_csv('C:\\Users\\HP\\Desktop\\vs code\\state2.csv')
         df1.State = df2
         
         # BAR CHART TOTAL UERS - DISTRICT WISE DATA
@@ -327,3 +337,12 @@ if SELECT == "ABOUT":
         st.write("---")
         st.subheader("Phonepe became a leading digital payments company")
         st.image(Image.open("C:\\Users\\HP\\Desktop\\vs code\\youtube\\phonepe_image.png"),width = 500)
+
+
+    
+    
+                            
+   
+
+
+                   
